@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/templates/main.xhtml">
+    <ui:define name="content">
+        <h3>Welcome</h3>
+        <h:form id="mf">
+            <h:messages />
+        </h:form>
+        <div class="row">
+            <div class="col-lg-4">
+                <h3>Latest uploads</h3>
+                <h5><strong>This week</strong></h5>
+                <table class="table">
+                    <tr><td>Castle Campaign Uganda <h:commandButton value="View" styleClass="btn pull-right" /></td></tr>
+                    <tr><td>Safari Soccer Extravaganza <h:commandButton value="View" styleClass="btn pull-right" /></td></tr>
+                </table>
+
+                <h5><strong>This month</strong></h5>
+                <table class="table">
+                    <tr><td>Castle Campaign Uganda 2011<h:commandButton value="View" styleClass="btn pull-right" /></td></tr>
+                    <tr><td>Safari Soccer Extravaganza 2012<h:commandButton value="View" styleClass="btn pull-right" /></td></tr>
+                </table>
+
+                <h5><strong>Older</strong></h5>
+                <div class="alert alert-info">
+                    <a href="#" class="alert-link">No documents to display</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3>Search</h3>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <h:outputLabel for="word" class="col-lg-2 control-label" value="Search"/>
+                        <div class="col-lg-10">
+                            <h:inputText class="form-control" id="word" pt:placeholder="Search word" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="brand" class="col-lg-2 control-label" value="Brand"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="brand">
+                                <f:selectItem itemLabel="Select brand" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="2M" itemValue="2M"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="country" class="col-lg-2 control-label" value="Country"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="country">
+                                <f:selectItem itemLabel="Select country" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Botswana" itemValue="Botswana"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="category" class="col-lg-2 control-label" value="Category"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="category">
+                                <f:selectItem itemLabel="Select category" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Category" itemValue="Category"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="positioning_territory" class="col-lg-2 control-label" value="Positioning Territory"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="positioning_territory">
+                                <f:selectItem itemLabel="Select positioning territory" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Category" itemValue="Category"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="campaign_type" class="col-lg-2 control-label" value="Compaign Type"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="campaign_type">
+                                <f:selectItem itemLabel="Select campaign type" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Type1" itemValue="Type1"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="property" class="col-lg-2 control-label" value="Property"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="property">
+                                <f:selectItem itemLabel="Select property" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Property1" itemValue="Type1"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="media_type" class="col-lg-2 control-label" value="Media Type"/>
+                        <div class="col-lg-10">
+                            <h:selectOneMenu class="form-control" id="media_type">
+                                <f:selectItem itemLabel="Select media type" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Type1" itemValue="Type1"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <h:commandButton type="button" value="Search" styleClass="btn btn-primary pull-right" />
+                </form>
+            </div>
+            <div class="col-lg-2">
+                <h3>Upload</h3>
+                <p>Click here to go to the upload page.</p>
+                <h:form id="uf">
+                    <h:commandButton styleClass="btn" value="Upload" action="collab/upload" />
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

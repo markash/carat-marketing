@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/core">
+
+<h:body>
+        <h:form id="f1">
+        	<h:selectOneMenu id="category" value="#{uploadController.category}" styleClass="form-control" converter="yellowfire.sab.category">
+                <f:selectItems value="#{uploadController.categories}" var="c" itemLabel="#{c.name}" />
+            </h:selectOneMenu>
+            <h:commandButton id="save" styleClass="btn btn-primary" value="Upload file" action="#{uploadController.uploadFile}"/>
+        </h:form>
+</h:body>
+</html>
