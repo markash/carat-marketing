@@ -1,15 +1,31 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://java.sun.com/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
+<h:head>
+    <title>JSFlive JSF 2.2 - File Upload with h:inputFile</title>
+</h:head>
 <h:body>
-        <h:form id="f1">
-        	<h:selectOneMenu id="category" value="#{uploadController.category}" styleClass="form-control" converter="yellowfire.sab.category">
-                <f:selectItems value="#{uploadController.categories}" var="c" itemLabel="#{c.name}" />
-            </h:selectOneMenu>
-            <h:commandButton id="save" styleClass="btn btn-primary" value="Upload file" action="#{uploadController.uploadFile}"/>
-        </h:form>
+    <h:form id="form" enctype="multipart/form-data">
+        <h:messages/>
+        <h:panelGrid columns="2">
+            <h:outputText value="File:"/>
+            <h:inputFile id="file" value="#{uploadController.uploadedFile}" />
+        </h:panelGrid>
+
+        <h:commandButton value="Upload File" action="#{uploadController.uploadFile}"/>
+        <h:commandButton value="Upload File (Ajax)" action="#{uploadController.uploadFile}">
+            <f:ajax execute="file" render="@all"/>
+        </h:commandButton>
+
+        <h:panelGrid id="content" columns="1">
+            <h:outputText value="Content:"/>
+            <h:inputTextarea readonly="true" value="#{uploadController.fileContent}"
+                             rows="10" cols="100"/>
+        </h:panelGrid>
+    </h:form>
 </h:body>
 </html>

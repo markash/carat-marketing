@@ -88,6 +88,9 @@ CREATE TABLE IF NOT EXISTS document (
   comments VARCHAR(255),
   attach_file VARCHAR(255),
   creative_claim VARCHAR(255),
+  file_data BYTEA,
+  file_name VARCHAR(255),
+  file_content_type VARCHAR(255),
   category_id INT REFERENCES category (id),
   brand_id INT REFERENCES  brand (id),
   media_type_id INT REFERENCES media_type (id),
@@ -95,6 +98,5 @@ CREATE TABLE IF NOT EXISTS document (
   campaign_type_id INT REFERENCES campaign_type (id),
   positioning_id INT references positioning (id),
   created TIMESTAMP NULL,
-  updated TIMESTAMP NULL,
-  UNIQUE (name)
+  updated TIMESTAMP NULL
 );

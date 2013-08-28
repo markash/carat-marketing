@@ -5,27 +5,28 @@ import com.google.common.collect.Iterables;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import za.co.yellowfire.carat.db.DataAccessException;
 import za.co.yellowfire.sab.db.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
+import javax.validation.ConstraintViolation;
 import javax.validation.constraints.NotNull;
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Named @ViewScoped @Slf4j
-public class UploadController implements Serializable {
+public class DownloadController implements Serializable {
     @Inject private CategoryDao categoryDao;
     @Inject private TerritoryDao territoryDao;
     @Inject private PropertyDao propertyDao;
@@ -34,13 +35,12 @@ public class UploadController implements Serializable {
     @Inject private BrandDao brandDao;
     @Inject private DocumentDao documentDao;
 
-    @Setter
+    @Getter @Setter
+    private Part uploadedFile;
+    @Getter @Setter
+    private String fileContent;
+    @Getter @Setter
     private DocumentItem document;
-    @Getter @Setter
-    private boolean readOnly = false;
-    private boolean readDocument = true;
-    @Getter @Setter
-    private StreamedContent fileDownload;
 
     @Getter @Setter
     private List<CategoryItem> categories;
@@ -58,7 +58,9 @@ public class UploadController implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            /* TODO For now the document is set to a new instance, later the document id will be read */
             this.document = new DocumentItem();
+
             this.categories = categoryDao.retrieve();
             this.territories = territoryDao.retrieve();
             this.properties = propertyDao.retrieve();
@@ -67,36 +69,21 @@ public class UploadController implements Serializable {
             this.brands = brandDao.retrieve();
         } catch (DataAccessException e) {
             log.error("Unable to retrieve data", e);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
 
-    public DocumentItem getDocument() {
-        try {
-            /* Read the document if not done so and if the document has an id */
-            if (readDocument && this.document.getId() != null) {
-                this.document = documentDao.retrieveById(document.getId());
-                this.fileDownload = new DefaultStreamedContent(new ByteArrayInputStream(this.document.getFileData()), this.document.getFileContentType(), this.document.getFileName());
-                this.readDocument = false;
-            }
-        } catch (DataAccessException e) {
-            log.error("Unable to retrieve document", e);
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void validateFile(FacesContext ctx, UIComponent comp, Object value) {
+        List<FacesMessage> msgs = new ArrayList<>();
+        Part file = (Part)value;
+        if (file.getSize() > 1024) {
+            msgs.add(new FacesMessage("file too big"));
         }
-        return this.document;
-    }
-
-    public void onFileUpload(FileUploadEvent event) {
-        UploadedFile file = event.getFile();
-
-        document.setFileName(file.getFileName());
-        document.setFileContentType(file.getContentType());
-        document.setFileData(file.getContents());
-
-        FacesMessage msg = new FacesMessage("Successful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        if (!"text/plain".equals(file.getContentType())) {
+            msgs.add(new FacesMessage("not a text file"));
+        }
+        if (!msgs.isEmpty()) {
+            throw new ValidatorException(msgs);
+        }
     }
 
     public String uploadFile() {
@@ -104,14 +91,14 @@ public class UploadController implements Serializable {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        Set<ConstraintViolation<DocumentItem>> violations = document.validate();
-//        if (violations.size() > 0) {
-//            for(ConstraintViolation<DocumentItem> violation : violations) {
-//                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, violation.getMessage(), null);
-//                context.addMessage("form:" + violation.getPropertyPath(), msg);
-//            }
-//            return null;
-//        }
+        Set<ConstraintViolation<DocumentItem>> violations = document.validate();
+        if (violations.size() > 0) {
+            for(ConstraintViolation<DocumentItem> violation : violations) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, violation.getMessage(), null);
+                context.addMessage("form:" + violation.getPropertyPath(), msg);
+            }
+            return null;
+        }
 
         try {
             documentDao.persist(document);
@@ -126,6 +113,17 @@ public class UploadController implements Serializable {
         }
 
         return "/index";
+
+//        try {
+//            //fileContent = new Scanner(uploadedFile.getInputStream()).useDelimiter("\\A").next();
+//        } catch (IOException e) {
+//            FacesMessage msg =
+//                    new FacesMessage(
+//                            FacesMessage.SEVERITY_ERROR,
+//                            "error uploading file",
+//                            null);
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        }
     }
 
     public String getCategoryValidationInfo() {

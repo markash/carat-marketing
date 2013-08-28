@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/templates/main.xhtml">
+    <ui:define name="nav">
+        <c:if test="${request.isUserInRole('ADMIN')}">
+            <li><h:commandLink value="Administration" action="/admin/data" /></li>
+        </c:if>
+    </ui:define>
+    <ui:define name="content">
+        <p class="lead">Administer</p>
+        <h:form id="form">
+            <h:messages />
+            <div class="row">
+                <div class="col-lg-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="#{dataController.selectedNav eq 'CATEGORIES' ? 'active' : ''}">
+                            <h:commandLink value="Categories" actionListener="#{dataController.onCategories}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="#{dataController.selectedNav eq 'TERRITORIES' ? 'active' : ''}">
+                            <h:commandLink value="Positioning Territories" actionListener="#{dataController.onTerritories}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="#{dataController.selectedNav eq 'CAMPAIGN_TYPES' ? 'active' : ''}">
+                            <h:commandLink value="Campaign Types" actionListener="#{dataController.onCampaignTypes}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="#{dataController.selectedNav eq 'PROPERTIES' ? 'active' : ''}">
+                            <h:commandLink value="Properties" actionListener="#{dataController.onProperties}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="#{dataController.selectedNav eq 'MEDIA_TYPES' ? 'active' : ''}">
+                            <h:commandLink value="Media Types" actionListener="#{dataController.onMediaTypes}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+                        <li class="#{dataController.selectedNav eq 'BRANDS' ? 'active' : ''}">
+                            <h:commandLink value="Brands" actionListener="#{dataController.onBrands}" >
+                                <f:ajax render="@form" />
+                            </h:commandLink>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <h:dataTable id="table" value="#{dataController.values}" var="o"
+                                 styleClass="table table-striped table-bordered table-condensed table-hover">
+                        <h:column><f:facet name="header">Value</f:facet>#{o.name}<h:commandButton value="Deactivate" styleClass="btn pull-right" /></h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3"> </div>
+                <div class="col-lg-9">
+                    <div class="form-group pull-right">
+                        <h:commandButton id="new" styleClass="btn btn-primary" value="New #{dataController.selectedItem}" />
+                        <span> </span>
+                        <h:commandButton id="cancel" styleClass="btn" value="Cancel" action="/index" immediate="true"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

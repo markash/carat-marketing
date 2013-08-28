@@ -44,6 +44,12 @@ public class DocumentItem implements Serializable {
     private String attachFile;
     @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String comments;
+    @Getter @Setter
+    private byte[] fileData;
+    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    private String fileName;
+    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    private String fileContentType;
 
     public Set<ConstraintViolation<DocumentItem>> validate() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
