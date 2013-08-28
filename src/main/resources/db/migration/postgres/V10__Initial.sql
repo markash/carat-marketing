@@ -80,3 +80,21 @@ INSERT INTO campaign_type (name) VALUES ('Emotional campaign');
 INSERT INTO campaign_type (name) VALUES ('Intrinsics campaign');
 INSERT INTO campaign_type (name) VALUES ('Sponsorship campaign');
 INSERT INTO campaign_type (name) VALUES ('Innovation campaign');
+
+CREATE TABLE IF NOT EXISTS document (
+  id SERIAL UNIQUE PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  comments VARCHAR(255),
+  attach_file VARCHAR(255),
+  creative_claim VARCHAR(255),
+  category_id INT REFERENCES category (id),
+  brand_id INT REFERENCES  brand (id),
+  media_type_id INT REFERENCES media_type (id),
+  property_id INT REFERENCES property (id),
+  campaign_type_id INT REFERENCES campaign_type (id),
+  positioning_id INT references positioning (id),
+  created TIMESTAMP NULL,
+  updated TIMESTAMP NULL,
+  UNIQUE (name)
+);

@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -21,27 +22,27 @@ import java.util.Set;
 public class DocumentItem implements Serializable {
     @Getter @Setter
     private Integer id;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private CategoryItem category;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private TerritoryItem territory;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private CampaignTypeItem campaignType;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private PropertyItem property;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private MediaTypeItem mediaType;
-    @Getter @Setter
+    @Getter @Setter @NotNull
     private BrandItem brand;
-    @Getter @Setter @NotEmpty @Length(min = 5, max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    @Getter @Setter @NotEmpty @Length(max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     private String name;
-    @Getter @Setter @NotEmpty @Length(min = 3) @Email
+    @Getter @Setter @NotEmpty @Length(max = 100) @Email
     private String email;
-    @Getter @Setter @NotEmpty @Length(max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String creativeClaim;
-    @Getter @Setter @NotEmpty @Length(max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String attachFile;
-    @Getter @Setter @NotEmpty @Length(max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String comments;
 
     public Set<ConstraintViolation<DocumentItem>> validate() {

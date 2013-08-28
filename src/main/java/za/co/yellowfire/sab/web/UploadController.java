@@ -22,10 +22,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 @Named @ViewScoped @Slf4j
@@ -36,6 +33,7 @@ public class UploadController implements Serializable {
     @Inject private MediaTypeDao mediaTypeDao;
     @Inject private CampaignTypeDao campaignTypeDao;
     @Inject private BrandDao brandDao;
+    @Inject private DocumentDao documentDao;
 
     @Getter @Setter
     private Part uploadedFile;
@@ -88,6 +86,82 @@ public class UploadController implements Serializable {
         }
     }
 
+    public String uploadFile() {
+        log.error("UPLOAD");
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        Set<ConstraintViolation<DocumentItem>> violations = document.validate();
+        if (violations.size() > 0) {
+            for(ConstraintViolation<DocumentItem> violation : violations) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, violation.getMessage(), null);
+                context.addMessage("form:" + violation.getPropertyPath(), msg);
+            }
+            return null;
+        }
+
+        try {
+            documentDao.persist(document);
+        } catch (DataAccessException e) {
+            log.error("Unable to save document", e);
+            FacesMessage msg =
+                    new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    "Unable to save document",
+                    e.getMessage());
+            context.addMessage(null, msg);
+        }
+
+        return "/index";
+
+//        try {
+//            //fileContent = new Scanner(uploadedFile.getInputStream()).useDelimiter("\\A").next();
+//        } catch (IOException e) {
+//            FacesMessage msg =
+//                    new FacesMessage(
+//                            FacesMessage.SEVERITY_ERROR,
+//                            "error uploading file",
+//                            null);
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        }
+    }
+
+    public String getCategoryValidationInfo() {
+        return hasCategoryError() ? "has-error" : "";
+    }
+
+    public String getPositioningValidationInfo() {
+        return hasPositioningError() ? "has-error" : "";
+    }
+
+    public String getCampaignTypeValidationInfo() {
+        return hasCampaignTypeError() ? "has-error" : "";
+    }
+
+    public String getPropertyValidationInfo() {
+        return hasPropertyError() ? "has-error" : "";
+    }
+
+    public String getMediaTypeValidationInfo() {
+        return hasMediaTypeError() ? "has-error" : "";
+    }
+
+    public String getBrandValidationInfo() {
+        return hasBrandError() ? "has-error" : "";
+    }
+
+    public String getClaimValidationInfo() {
+        return hasClaimError() ? "has-error" : "";
+    }
+
+    public String getAttachFileValidationInfo() {
+        return hasAttachFileError() ? "has-error" : "";
+    }
+
+    public String getCommentsValidationInfo() {
+        return hasCommentsError() ? "has-error" : "";
+    }
+
     public String getNameValidationInfo() {
         if (hasNameError()) {
             return "has-error";
@@ -104,6 +178,42 @@ public class UploadController implements Serializable {
             return "has-warning";
         }
         return "";
+    }
+
+    public boolean hasCategoryError() {
+        return hasMessages("form:category", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasPositioningError() {
+        return hasMessages("form:territory", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasCampaignTypeError() {
+        return hasMessages("form:campaignType", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasPropertyError() {
+        return hasMessages("form:property", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasMediaTypeError() {
+        return hasMessages("form:mediaType", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasBrandError() {
+        return hasMessages("form:brand", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasClaimError() {
+        return hasMessages("form:claim", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasAttachFileError() {
+        return hasMessages("form:attach_file", FacesMessage.SEVERITY_ERROR);
+    }
+
+    public boolean hasCommentsError() {
+        return hasMessages("form:comments", FacesMessage.SEVERITY_ERROR);
     }
 
     public boolean hasNameWarning() {
@@ -131,24 +241,5 @@ public class UploadController implements Serializable {
                                 return msg != null && msg.getSeverity() != null && severity.equals(msg.getSeverity());
                             }
                         }));
-    }
-
-    public void uploadFile() {
-        log.error("UPLOAD");
-
-        for(ConstraintViolation<DocumentItem> violation : document.validate()) {
-            System.out.println(violation.getPropertyPath() + "violation = " + violation.getMessage());
-        }
-
-//        try {
-//            //fileContent = new Scanner(uploadedFile.getInputStream()).useDelimiter("\\A").next();
-//        } catch (IOException e) {
-//            FacesMessage msg =
-//                    new FacesMessage(
-//                            FacesMessage.SEVERITY_ERROR,
-//                            "error uploading file",
-//                            null);
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        }
     }
 }

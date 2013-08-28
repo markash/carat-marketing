@@ -12,10 +12,10 @@
                 <div class="col-lg-6">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Category</strong></div>
+                            <div class="row #{uploadController.categoryValidationInfo}">
+                                <div class="col-lg-4"><label for="category" class="control-label">Category</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="category" value="#{uploadController.document.category}" styleClass="form-control" converter="yellowfire.sab.category">
+                                    <h:selectOneMenu id="category" value="#{uploadController.document.category}" required="true" label="Category" styleClass="form-control" converter="yellowfire.sab.category">
                                         <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.categories}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -23,10 +23,10 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Positioning Territory</strong></div>
+                            <div class="row #{uploadController.positioningValidationInfo}">
+                                <div class="col-lg-4"><label for="territory" class="control-label">Positioning Territory</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="territory" value="#{uploadController.document.territory}" styleClass="form-control" converter="yellowfire.sab.territory">
+                                    <h:selectOneMenu id="territory" value="#{uploadController.document.territory}" required="true" label="Positioning Territory" styleClass="form-control" converter="yellowfire.sab.territory">
                                         <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.territories}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -34,10 +34,10 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Campaign Type</strong></div>
+                            <div class="row #{uploadController.campaignTypeValidationInfo}">
+                                <div class="col-lg-4"><label for="campaignType" class="control-label">Campaign Type</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="campaignType" value="#{uploadController.document.campaignType}" styleClass="form-control" converter="yellowfire.sab.campaignType">
+                                    <h:selectOneMenu id="campaignType" value="#{uploadController.document.campaignType}" required="true" label="Campaign Type" styleClass="form-control" converter="yellowfire.sab.campaignType">
                                         <f:selectItem itemLabel="Select one" itemValue="-1"  noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.campaignTypes}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -64,10 +64,10 @@
                 <div class="col-lg-6">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Property</strong></div>
+                            <div class="row #{uploadController.propertyValidationInfo}">
+                                <div class="col-lg-4"><label for="property" class="control-label">Property</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="property" value="#{uploadController.document.property}" styleClass="form-control" converter="yellowfire.sab.property">
+                                    <h:selectOneMenu id="property" value="#{uploadController.document.property}" required="true" label="Property" styleClass="form-control" converter="yellowfire.sab.property">
                                         <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.properties}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -75,10 +75,10 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Type</strong></div>
+                            <div class="row #{uploadController.mediaTypeValidationInfo}">
+                                <div class="col-lg-4"><label for="mediaType" class="control-label">Type</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="mediaType" value="#{uploadController.document.mediaType}" styleClass="form-control" converter="yellowfire.sab.mediaType">
+                                    <h:selectOneMenu id="mediaType" value="#{uploadController.document.mediaType}" required="true" label="Type" styleClass="form-control" converter="yellowfire.sab.mediaType">
                                         <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.mediaTypes}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -86,10 +86,10 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4"><strong>Brand</strong></div>
+                            <div class="row #{uploadController.brandValidationInfo}">
+                                <div class="col-lg-4"><label for="brand" class="control-label">Brand</label></div>
                                 <div class="col-lg-8">
-                                    <h:selectOneMenu id="brand" value="#{uploadController.document.brand}" styleClass="form-control" converter="yellowfire.sab.brand">
+                                    <h:selectOneMenu id="brand" value="#{uploadController.document.brand}" required="true" label="Brand" styleClass="form-control" converter="yellowfire.sab.brand">
                                         <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
                                         <f:selectItems value="#{uploadController.brands}" var="c" itemLabel="#{c.name}" />
                                     </h:selectOneMenu>
@@ -97,7 +97,7 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
+                            <div class="row #{uploadController.claimValidationInfo}">
                                 <div class="col-lg-4"><label for="claim" class="control-label">Creative claim</label></div>
                                 <div class="col-lg-8">
                                     <h:inputText id="claim" styleClass="form-control" pt:placeholder="Creative claim" label="Creative claim" value="#{uploadController.document.creativeClaim}">
@@ -109,7 +109,7 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
+                            <div class="row #{uploadController.attachFileValidationInfo}">
                                 <div class="col-lg-4"><label for="attach_file" class="control-label">Attach file</label></div>
                                 <div class="col-lg-8">
                                     <h:inputText id="attach_file" styleClass="form-control" pt:placeholder="Attach file" label="Attach file" value="#{uploadController.document.attachFile}">
@@ -121,7 +121,7 @@
                             </div>
                         </li>
                         <li class="list-group-item">
-                            <div class="row">
+                            <div class="row #{uploadController.commentsValidationInfo}">
                                 <div class="col-lg-4"><label for="comments" class="control-label">Comments</label></div>
                                 <div class="col-lg-8">
                                     <h:inputText id="comments" styleClass="form-control" pt:placeholder="Comments" label="Comments" value="#{uploadController.document.comments}">
@@ -136,9 +136,8 @@
                             <div class="row #{uploadController.nameValidationInfo}">
                                 <div class="col-lg-4"><label for="name" class="control-label">Name</label></div>
                                 <div class="col-lg-8">
-                                    <h:inputText id="name" styleClass="form-control" pt:placeholder="Document name" label="Name" value="#{uploadController.document.name}">
+                                    <h:inputText id="name" styleClass="form-control" pt:placeholder="Document name" required="true" label="Name" value="#{uploadController.document.name}">
                                         <f:passThroughAttribute name="data-required" value="true"/>
-                                        <f:validateRequired />
                                         <f:validateLength minimum="5" maximum="100" />
                                     </h:inputText>
                                 </div>
@@ -148,9 +147,8 @@
                             <div class="row #{uploadController.emailValidationInfo}">
                                 <div class="col-lg-4"><label for="email" class="control-label">Email</label></div>
                                 <div class="col-lg-8">
-                                    <h:inputText id="email" styleClass="form-control" pt:type="email" pt:placeholder="Enter email" value="#{uploadController.document.email}">
+                                    <h:inputText id="email" styleClass="form-control" pt:type="email" pt:placeholder="Enter email" required="true" label="Email" value="#{uploadController.document.email}">
                                         <f:passThroughAttribute name="data-required" value="true"/>
-                                        <f:validateRequired />
                                         <f:validateLength minimum="3"/>
                                     </h:inputText>
                                 </div>
