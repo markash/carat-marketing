@@ -298,7 +298,7 @@
                         <schema>${db.schema}</schema>
                     </schemas>
                     <locations>
-                        <location>filesystem:/src/main/resources/db/migration/${db.type}</location>
+                        <location>filesystem:src/main/resources/db/migration/${db.type}</location>
                     </locations>
                 </configuration>
                 <dependencies>
