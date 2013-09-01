@@ -77,7 +77,9 @@ public class UploadController implements Serializable {
             /* Read the document if not done so and if the document has an id */
             if (readDocument && this.document.getId() != null) {
                 this.document = documentDao.retrieveById(document.getId());
-                this.fileDownload = new DefaultStreamedContent(new ByteArrayInputStream(this.document.getFileData()), this.document.getFileContentType(), this.document.getFileName());
+                if (null != this.document.getFileData()) {
+                    this.fileDownload = new DefaultStreamedContent(new ByteArrayInputStream(this.document.getFileData()), this.document.getFileContentType(), this.document.getFileName());
+                }
                 this.readDocument = false;
             }
         } catch (DataAccessException e) {
@@ -89,7 +91,12 @@ public class UploadController implements Serializable {
     }
 
     public void onFileUpload(FileUploadEvent event) {
+        log.info("onFileUpload : {}", event);
         UploadedFile file = event.getFile();
+
+        log.info("onFileUpload file : {}", file);
+        log.info("onFileUpload filename : {}", file.getFileName());
+        log.info("onFileUpload content : {}", file.getContentType());
 
         document.setFileName(file.getFileName());
         document.setFileContentType(file.getContentType());

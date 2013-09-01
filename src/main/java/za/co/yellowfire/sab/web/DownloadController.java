@@ -72,59 +72,6 @@ public class DownloadController implements Serializable {
         }
     }
 
-    public void validateFile(FacesContext ctx, UIComponent comp, Object value) {
-        List<FacesMessage> msgs = new ArrayList<>();
-        Part file = (Part)value;
-        if (file.getSize() > 1024) {
-            msgs.add(new FacesMessage("file too big"));
-        }
-        if (!"text/plain".equals(file.getContentType())) {
-            msgs.add(new FacesMessage("not a text file"));
-        }
-        if (!msgs.isEmpty()) {
-            throw new ValidatorException(msgs);
-        }
-    }
-
-    public String uploadFile() {
-        log.error("UPLOAD");
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        Set<ConstraintViolation<DocumentItem>> violations = document.validate();
-        if (violations.size() > 0) {
-            for(ConstraintViolation<DocumentItem> violation : violations) {
-                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, violation.getMessage(), null);
-                context.addMessage("form:" + violation.getPropertyPath(), msg);
-            }
-            return null;
-        }
-
-        try {
-            documentDao.persist(document);
-        } catch (DataAccessException e) {
-            log.error("Unable to save document", e);
-            FacesMessage msg =
-                    new FacesMessage(
-                    FacesMessage.SEVERITY_ERROR,
-                    "Unable to save document",
-                    e.getMessage());
-            context.addMessage(null, msg);
-        }
-
-        return "/index";
-
-//        try {
-//            //fileContent = new Scanner(uploadedFile.getInputStream()).useDelimiter("\\A").next();
-//        } catch (IOException e) {
-//            FacesMessage msg =
-//                    new FacesMessage(
-//                            FacesMessage.SEVERITY_ERROR,
-//                            "error uploading file",
-//                            null);
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        }
-    }
 
     public String getCategoryValidationInfo() {
         return hasCategoryError() ? "has-error" : "";
