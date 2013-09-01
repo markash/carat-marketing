@@ -298,6 +298,7 @@
                         <schema>${db.schema}</schema>
                     </schemas>
                     <locations>
+                        <location>classpath:db.migration.${db.type}</location>
                         <location>filesystem:src/main/resources/db/migration/${db.type}</location>
                     </locations>
                 </configuration>
@@ -391,10 +392,12 @@
             <id>postgres</id>
             <properties>
                 <db.driver>org.postgresql.Driver</db.driver>
-                <db.url>jdbc:postgresql://localhost/carat-db</db.url>
-                <db.user>carat-user</db.user>
-                <db.password>password1*</db.password>
-                <db.schema>sab</db.schema>
+                <db.url>jdbc:postgresql://${db.server}:${db.port}/${db.name}</db.url>
+                <!--
+                <db.user>${db.user}</db.user>
+                <db.password>${db.password}</db.password>
+                <db.schema>${db.schema}</db.schema>
+                -->
                 <db.type>postgres</db.type>
                 <db.jooq.class>org.jooq.util.postgres.PostgresDatabase</db.jooq.class>
             </properties>
