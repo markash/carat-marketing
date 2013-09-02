@@ -10,7 +10,7 @@ import java.util.Date;
 
 @EqualsAndHashCode(of = {"id"})
 @ToString(includeFieldNames = false, of = {"name"})
-public class MediaTypeItem implements DomainItem {
+public class MediaTypeItem implements LookupItem {
     @Getter
     @Setter
     private Integer id;

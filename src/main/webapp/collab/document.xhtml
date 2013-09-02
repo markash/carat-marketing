@@ -77,7 +77,12 @@
                     <div class="row">
                         <div class="col-lg-4"><h:outputLabel styleClass="control-label" value="Upload file" /></div>
                         <div class="col-lg-8">
+                            <h:inputFile id="file" value="#{uploadController.fileUpload}" />
+                            <ui:remove>
+                            <!--
                             <p:fileUpload update="file_name" fileUploadListener="#{uploadController.onFileUpload}" mode="advanced" auto="true" multiple="false"  />
+                            -->
+                            </ui:remove>
                         </div>
                     </div>
                 </li>

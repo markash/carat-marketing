@@ -7,7 +7,7 @@
                 template="/templates/main-html4.xhtml">
     <ui:define name="content">
     <h:form id="form">
-        <p:fileUpload update="messages" fileUploadListener="#{uploadController.onFileUpload}" mode="advanced" auto="false" />
+        <p:fileUpload update="messages" fileUploadListener="#{testController.onFileUpload}" mode="advanced" auto="false" />
         <p:growl id="messages" showDetail="true"/>
     </h:form>
     </ui:define>

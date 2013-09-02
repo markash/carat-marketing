@@ -10,7 +10,7 @@ import java.util.Date;
 
 @EqualsAndHashCode(of = {"id"})
 @ToString(includeFieldNames = false, of = {"name"})
-public class TerritoryItem implements DomainItem {
+public class TerritoryItem implements LookupItem {
     @Getter
     @Setter
     private Integer id;

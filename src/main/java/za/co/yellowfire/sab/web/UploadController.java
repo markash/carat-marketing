@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -18,8 +19,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -41,6 +45,8 @@ public class UploadController implements Serializable {
     private boolean readDocument = true;
     @Getter @Setter
     private StreamedContent fileDownload;
+    @Getter @Setter
+    private Part fileUpload;
 
     @Getter @Setter
     private List<CategoryItem> categories;
@@ -106,8 +112,28 @@ public class UploadController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public String uploadFile() {
+    public String onSave() {
         log.error("UPLOAD");
+
+        log.info("onFileUpload file : {}", fileUpload);
+        log.info("onFileUpload name : {}", fileUpload.getName());
+        log.info("onFileUpload filename : {}", fileUpload.getSubmittedFileName());
+        log.info("onFileUpload content : {}", fileUpload.getContentType());
+
+        /* 2Gb limit here, need to validate */
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream((int) fileUpload.getSize());
+            int read = IOUtils.copy(fileUpload.getInputStream(), buffer);
+
+            document.setFileName(fileUpload.getSubmittedFileName());
+            document.setFileContentType(fileUpload.getContentType());
+            document.setFileData(buffer.toByteArray());
+        } catch (IOException e) {
+            FacesMessage msg = new FacesMessage("Document read error", fileUpload.getName() + " is failed, " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
+
 
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -122,6 +148,9 @@ public class UploadController implements Serializable {
 
         try {
             documentDao.persist(document);
+
+            FacesMessage msg = new FacesMessage("Successful", fileUpload.getName() + " is uploaded.");
+            context.addMessage(null, msg);
         } catch (DataAccessException e) {
             log.error("Unable to save document", e);
             FacesMessage msg =

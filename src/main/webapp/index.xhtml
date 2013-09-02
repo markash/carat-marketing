@@ -33,7 +33,7 @@
                     <h:dataTable value="#{homeController.thisMonth}" var="doc" styleClass="table" rendered="#{homeController.thisMonth.rowCount gt 0}">
                         <h:column>
                             <h:outputText value="#{doc.fileName}" />
-                            <h:commandButton value="View" styleClass="btn pull-right" />
+                            <h:commandButton value="View" styleClass="btn pull-right" action="#{homeController.onView(doc.id)}"/>
                         </h:column>
                     </h:dataTable>
                     <ct:alert type="info" message="No documents to display" rendered="#{homeController.thisMonth.rowCount eq 0}" />
@@ -42,7 +42,7 @@
                     <h:dataTable value="#{homeController.thisYear}" var="doc" styleClass="table" rendered="#{homeController.thisYear.rowCount gt 0}">
                         <h:column>
                             <h:outputText value="#{doc.fileName}" />
-                            <h:commandButton value="View" styleClass="btn pull-right" />
+                            <h:commandButton value="View" styleClass="btn pull-right" action="#{homeController.onView(doc.id)}"/>
                         </h:column>
                     </h:dataTable>
                     <ct:alert type="info" message="No documents to display" rendered="#{homeController.thisYear.rowCount eq 0}" />
@@ -128,7 +128,7 @@
                 <h3>Upload</h3>
                 <p>Click here to go to the upload page.</p>
                 <h:form id="uf">
-                    <h:commandButton styleClass="btn" value="Upload" action="collab/upload" />
+                    <h:commandButton styleClass="btn" value="Upload" action="#{homeController.onUpload}" />
                 </h:form>
             </div>
         </div>

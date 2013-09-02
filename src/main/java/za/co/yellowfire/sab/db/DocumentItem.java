@@ -7,7 +7,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.SafeHtml;
+//import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -34,21 +34,21 @@ public class DocumentItem implements Serializable {
     private MediaTypeItem mediaType;
     @Getter @Setter @NotNull
     private BrandItem brand;
-    @Getter @Setter @NotEmpty @Length(max = 100) @SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+    @Getter @Setter @NotEmpty @Length(max = 100) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
     private String name;
     @Getter @Setter @NotEmpty @Length(max = 100) @Email
     private String email;
-    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String creativeClaim;
-    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String attachFile;
-    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String comments;
     @Getter @Setter
     private byte[] fileData;
-    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String fileName;
-    @Getter @Setter @Length(max = 255) @SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
+    @Getter @Setter @Length(max = 255) //@SafeHtml(whitelistType = SafeHtml.WhiteListType.BASIC)
     private String fileContentType;
 
     public Set<ConstraintViolation<DocumentItem>> validate() {

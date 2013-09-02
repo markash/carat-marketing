@@ -20,8 +20,7 @@ import java.util.List;
 
 @Named @ViewScoped @Slf4j
 public class DataController implements Serializable{
-    @Inject
-    private CategoryDao categoryDao;
+    @Inject private CategoryDao categoryDao;
     @Inject private TerritoryDao territoryDao;
     @Inject private PropertyDao propertyDao;
     @Inject private MediaTypeDao mediaTypeDao;
@@ -30,7 +29,7 @@ public class DataController implements Serializable{
     @Inject private DocumentDao documentDao;
 
     @Getter @Setter
-    private DataModel<?> values;
+    private DataModel<? extends LookupItem> values;
 
     enum Menu {
         CATEGORIES,

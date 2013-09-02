@@ -44,6 +44,10 @@ public class HomeController implements Serializable {
     @PreDestroy
     public void cleanup() { }
 
+    public String onUpload() {
+        return "/collab/upload?faces-redirect=true";
+    }
+
     public String onView(Integer documentId) {
         return "/collab/view?faces-redirect=true&id=" + documentId;
     }

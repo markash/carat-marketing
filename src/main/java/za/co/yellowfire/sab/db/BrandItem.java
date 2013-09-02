@@ -10,7 +10,7 @@ import java.util.Date;
 
 @EqualsAndHashCode(of = {"id"})
 @ToString(includeFieldNames = false, of = {"name"})
-public class BrandItem implements DomainItem {
+public class BrandItem implements LookupItem {
     @Getter @Setter
     private Integer id;
     @Getter @Setter

@@ -9,21 +9,21 @@
     <title>JSFlive JSF 2.2 - File Upload with h:inputFile</title>
 </h:head>
 <h:body>
-    <h:form id="form" enctype="multipart/form-data">
+    <h:form id="form" enctype="multipart/form-data" prependId="false">
         <h:messages/>
         <h:panelGrid columns="2">
             <h:outputText value="File:"/>
-            <h:inputFile id="file" value="#{uploadController.uploadedFile}" />
+            <h:inputFile id="file" value="#{testController.uploadedFile}" />
         </h:panelGrid>
 
-        <h:commandButton value="Upload File" action="#{uploadController.uploadFile}"/>
-        <h:commandButton value="Upload File (Ajax)" action="#{uploadController.uploadFile}">
+        <h:commandButton value="Upload File" action="#{testController.onFileUpload}"/>
+        <h:commandButton value="Upload File (Ajax)" action="#{testController.onFileUpload}">
             <f:ajax execute="file" render="@all"/>
         </h:commandButton>
 
         <h:panelGrid id="content" columns="1">
             <h:outputText value="Content:"/>
-            <h:inputTextarea readonly="true" value="#{uploadController.fileContent}"
+            <h:inputTextarea readonly="true" value="#{testController.fileContent}"
                              rows="10" cols="100"/>
         </h:panelGrid>
     </h:form>
